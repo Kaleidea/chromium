@@ -1199,6 +1199,10 @@
       implied_by: ["HTMLSelectMenuElement"],
     },
     {
+      name: "HTMLSearchElement",
+      status: "experimental",
+    },
+    {
       name: "HTMLSelectMenuElement",
       status: "experimental",
     },
