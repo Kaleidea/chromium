@@ -90,8 +90,9 @@ bool HasFormInBetween(const Node* root, const Node* descendant) {
 
 }  // namespace
 
-HTMLFormElement::HTMLFormElement(Document& document)
-    : HTMLElement(html_names::kFormTag, document),
+HTMLFormElement::HTMLFormElement(const QualifiedName& tag_name, Document& document)
+    : HTMLElement(tag_name, document),
+      is_search_form_(HasTagName(html_names::kSearchTag)),
       listed_elements_are_dirty_(false),
       listed_elements_including_shadow_trees_are_dirty_(false),
       image_elements_are_dirty_(false),
@@ -103,6 +104,10 @@ HTMLFormElement::HTMLFormElement(Document& document)
   unique_renderer_form_id_ = next_unique_renderer_form_id++;
 
   UseCounter::Count(document, WebFeature::kFormElement);
+}
+
+HTMLFormElement::HTMLFormElement(Document& document)
+  : HTMLFormElement(html_names::kFormTag, document) {
 }
 
 HTMLFormElement::~HTMLFormElement() = default;
@@ -469,6 +474,10 @@ void HTMLFormElement::ScheduleFormSubmission(
     SubmitDialog(form_submission);
     return;
   }
+
+  // Do not submit if the `action` attribute is unset on a `<search>` element.
+  if (is_search_form_ && attributes_.Action().IsNull())
+    return;
 
   DCHECK(form_submission->Method() == FormSubmission::kPostMethod ||
          form_submission->Method() == FormSubmission::kGetMethod);
