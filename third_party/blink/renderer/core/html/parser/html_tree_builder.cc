@@ -662,7 +662,8 @@ void HTMLTreeBuilder::ProcessStartTagForInBody(AtomicHTMLToken* token) {
     frameset_ok_ = false;
     return;
   }
-  if (token->GetName() == html_names::kFormTag) {
+  if (token->GetName() == html_names::kFormTag ||
+      token->GetName() == html_names::kSearchTag) {
     if (tree_.IsFormElementPointerNonNull() && !IsParsingTemplateContents()) {
       ParseError(token);
       UseCounter::Count(tree_.CurrentNode()->GetDocument(),
@@ -1111,7 +1112,8 @@ void HTMLTreeBuilder::ProcessStartTagForInTable(AtomicHTMLToken* token) {
     }
     // Fall through to "anything else" case.
   }
-  if (token->GetName() == html_names::kFormTag) {
+  if (token->GetName() == html_names::kFormTag||
+      token->GetName() == html_names::kSearchTag) {
     ParseError(token);
     if (tree_.IsFormElementPointerNonNull() && !IsParsingTemplateContents())
       return;
@@ -1900,7 +1902,8 @@ void HTMLTreeBuilder::ProcessEndTagForInBody(AtomicHTMLToken* token) {
     tree_.OpenElements()->PopUntilPopped(token->GetName());
     return;
   }
-  if (token->GetName() == html_names::kFormTag &&
+  if ((token->GetName() == html_names::kFormTag ||
+       token->GetName() == html_names::kSearchTag) &&
       !IsParsingTemplateContents()) {
     Element* node = tree_.TakeForm();
     if (!node || !tree_.OpenElements()->InScope(node)) {
