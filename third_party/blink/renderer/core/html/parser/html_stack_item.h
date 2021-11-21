@@ -31,6 +31,9 @@
 #include "third_party/blink/renderer/core/html_names.h"
 #include "third_party/blink/renderer/core/mathml_names.h"
 #include "third_party/blink/renderer/core/svg_names.h"
+// TODO(Kaleidea,feature:HTMLSearchElement):
+// When the feature is shipped remove runtime_enabled_features.h.
+#include "third_party/blink/renderer/platform/runtime_enabled_features.h"
 #include "third_party/blink/renderer/platform/wtf/text/atomic_string.h"
 
 namespace blink {
@@ -191,6 +194,11 @@ class HTMLStackItem final : public GarbageCollected<HTMLStackItem> {
            tag_name == html_names::kPlaintextTag ||
            tag_name == html_names::kPreTag ||
            tag_name == html_names::kScriptTag ||
+           // TODO(Kaleidea,feature:HTMLSearchElement): Keep in sync with
+           // html_form_element.h::IsHTMLFormTag(). When the feature is shipped
+           // remove the flag.
+           (tag_name == html_names::kSearchTag &&
+            RuntimeEnabledFeatures::HTMLSearchElementEnabled()) ||
            tag_name == html_names::kSectionTag ||
            tag_name == html_names::kSelectTag ||
            tag_name == html_names::kStyleTag ||
