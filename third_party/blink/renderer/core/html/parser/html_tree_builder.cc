@@ -638,6 +638,7 @@ void HTMLTreeBuilder::ProcessStartTagForInBody(AtomicHTMLToken* token) {
       token->GetName() == html_names::kNavTag ||
       token->GetName() == html_names::kOlTag ||
       token->GetName() == html_names::kPTag ||
+      token->GetName() == html_names::kSearchTag ||
       token->GetName() == html_names::kSectionTag ||
       token->GetName() == html_names::kSummaryTag ||
       token->GetName() == html_names::kUlTag) {
@@ -1887,6 +1888,7 @@ void HTMLTreeBuilder::ProcessEndTagForInBody(AtomicHTMLToken* token) {
       token->GetName() == html_names::kNavTag ||
       token->GetName() == html_names::kOlTag ||
       token->GetName() == html_names::kPreTag ||
+      token->GetName() == html_names::kSearchTag ||
       token->GetName() == html_names::kSectionTag ||
       token->GetName() == html_names::kSummaryTag ||
       token->GetName() == html_names::kUlTag) {

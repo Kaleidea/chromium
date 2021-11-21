@@ -420,6 +420,10 @@
       constructorNeedsCreateElementFlags: true,
     },
     {
+      name: "search",
+      interfaceName: "HTMLElement",
+    },
+    {
       name: "section",
       interfaceName: "HTMLElement",
     },
