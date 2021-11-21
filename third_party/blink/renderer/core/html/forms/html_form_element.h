@@ -30,6 +30,9 @@
 #include "third_party/blink/renderer/core/html/forms/radio_button_group_scope.h"
 #include "third_party/blink/renderer/core/html/html_element.h"
 #include "third_party/blink/renderer/core/loader/form_submission.h"
+// TODO(Kaleidea,feature:HTMLSearchElement):
+// When the feature is shipped remove runtime_enabled_features.h.
+#include "third_party/blink/renderer/platform/runtime_enabled_features.h"
 
 namespace blink {
 
@@ -44,8 +47,12 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  explicit HTMLFormElement(Document&);
+  explicit HTMLFormElement(const QualifiedName& tag_name, Document&);
+  explicit HTMLFormElement(Document& document)
+      : HTMLFormElement(html_names::kFormTag, document) {}
+
   ~HTMLFormElement() override;
+  bool IsHTMLFormElement() const final { return true; }
   void Trace(Visitor*) const override;
 
   HTMLFormControlsCollection* elements();
@@ -179,6 +186,7 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   bool in_user_js_submit_event_ = false;
   bool is_constructing_entry_list_ = false;
 
+  bool is_search_form_ : 1;
   bool listed_elements_are_dirty_ : 1;
   bool listed_elements_including_shadow_trees_are_dirty_ : 1;
   bool image_elements_are_dirty_ : 1;
@@ -187,6 +195,38 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   bool did_finish_parsing_children_ : 1;
   bool is_in_reset_function_ : 1;
 };
+
+// Check if an AtomicString is the localName "form" or "search".
+inline bool IsHTMLFormTag(const AtomicString& tag_name) {
+  return tag_name == html_names::kFormTag ||
+         (tag_name == html_names::kSearchTag &&
+          RuntimeEnabledFeatures::HTMLSearchElementEnabled());
+  // TODO(Kaleidea,feature:HTMLSearchElement):
+  // When the HTMLSearchElement feature is shipped remove the flag.
+  // Keep in sync with:
+  // AXNodeObject::NativeRoleIgnoringAria(),
+  // replace_selection_command.cc::IsProhibitedParagraphChild(),
+  // HTMLStackItem::IsSpecialNode().
+}
+
+template <>
+struct DowncastTraits<HTMLFormElement> {
+  static bool AllowFrom(const HTMLElement& element) {
+    return element.IsHTMLFormElement();
+  }
+  static bool AllowFrom(const Node& node) {
+    return node.IsHTMLElement() && To<HTMLElement>(node).IsHTMLFormElement();
+  }
+};
+
+template <>
+inline bool IsElementOfType<const HTMLFormElement>(const HTMLElement& element) {
+  return IsA<HTMLFormElement>(element);
+}
+template <>
+inline bool IsElementOfType<const HTMLFormElement>(const Node& node) {
+  return IsA<HTMLFormElement>(node);
+}
 
 }  // namespace blink
 
