@@ -121,7 +121,7 @@ void CollectFeatures(Element& root,
     features.element_count++;
     if (element.HasTagName(html_names::kATag)) {
       features.anchor_count++;
-    } else if (element.HasTagName(html_names::kFormTag)) {
+    } else if (IsA<HTMLFormElement>(element)) {
       features.form_count++;
     } else if (element.HasTagName(html_names::kInputTag)) {
       const auto& input = To<HTMLInputElement>(element);

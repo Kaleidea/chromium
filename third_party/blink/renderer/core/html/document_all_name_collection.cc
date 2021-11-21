@@ -24,7 +24,7 @@ bool DocumentAllNameCollection::ElementMatches(const Element& element) const {
   if (element.HasTagName(html_names::kATag) ||
       element.HasTagName(html_names::kButtonTag) ||
       element.HasTagName(html_names::kEmbedTag) ||
-      element.HasTagName(html_names::kFormTag) ||
+      IsA<HTMLFormElement>(element) ||
       element.HasTagName(html_names::kFrameTag) ||
       element.HasTagName(html_names::kFramesetTag) ||
       element.HasTagName(html_names::kIFrameTag) ||

@@ -62,7 +62,7 @@ bool RelList::ValidateTokenValue(const AtomicString& token_value,
     }
   } else if ((GetElement().HasTagName(html_names::kATag) ||
               GetElement().HasTagName(html_names::kAreaTag) ||
-              GetElement().HasTagName(html_names::kFormTag)) &&
+              IsA<HTMLFormElement>(GetElement())) &&
              SupportedTokensAnchorAndAreaAndForm().Contains(token_value)) {
     return true;
   }
