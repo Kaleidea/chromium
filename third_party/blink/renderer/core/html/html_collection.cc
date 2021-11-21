@@ -30,6 +30,7 @@
 #include "third_party/blink/renderer/core/html/document_name_collection.h"
 #include "third_party/blink/renderer/core/html/forms/html_data_list_options_collection.h"
 #include "third_party/blink/renderer/core/html/forms/html_form_control_element.h"
+#include "third_party/blink/renderer/core/html/forms/html_form_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_option_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_options_collection.h"
 #include "third_party/blink/renderer/core/html/html_element.h"
@@ -345,6 +346,7 @@ static inline bool NameShouldBeVisibleInDocumentAll(
          element.HasTagName(html_names::kMapTag) ||
          element.HasTagName(html_names::kMetaTag) ||
          element.HasTagName(html_names::kObjectTag) ||
+         element.HasTagName(html_names::kSearchTag) ||
          element.HasTagName(html_names::kSelectTag) ||
          element.HasTagName(html_names::kTextareaTag);
 }
