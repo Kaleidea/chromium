@@ -191,6 +191,7 @@ class HTMLStackItem final : public GarbageCollected<HTMLStackItem> {
            tag_name == html_names::kPlaintextTag ||
            tag_name == html_names::kPreTag ||
            tag_name == html_names::kScriptTag ||
+           tag_name == html_names::kSearchTag ||
            tag_name == html_names::kSectionTag ||
            tag_name == html_names::kSelectTag ||
            tag_name == html_names::kStyleTag ||
