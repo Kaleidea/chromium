@@ -44,7 +44,7 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  explicit HTMLFormElement(Document&);
+  explicit HTMLFormElement(const QualifiedName& tag_name, Document&);
   ~HTMLFormElement() override;
   void Trace(Visitor*) const override;
 
@@ -175,6 +175,7 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
 
   uint64_t unique_renderer_form_id_;
 
+  bool is_search_form_ : 1;
   bool is_submitting_ = false;
   bool in_user_js_submit_event_ = false;
   bool is_constructing_entry_list_ = false;

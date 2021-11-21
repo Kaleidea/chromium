@@ -345,6 +345,7 @@ static inline bool NameShouldBeVisibleInDocumentAll(
          element.HasTagName(html_names::kMapTag) ||
          element.HasTagName(html_names::kMetaTag) ||
          element.HasTagName(html_names::kObjectTag) ||
+         element.HasTagName(html_names::kSearchTag) ||
          element.HasTagName(html_names::kSelectTag) ||
          element.HasTagName(html_names::kTextareaTag);
 }
