@@ -68,6 +68,9 @@
 #include "third_party/blink/renderer/platform/heap/garbage_collected.h"
 #include "third_party/blink/renderer/platform/instrumentation/tracing/trace_event.h"
 #include "third_party/blink/renderer/platform/instrumentation/use_counter.h"
+// TODO(Kaleidea,feature:HTMLSearchElement):
+// When the HTMLSearchElement feature is shipped remove runtime_enabled_features.h.
+#include "third_party/blink/renderer/platform/runtime_enabled_features.h"
 #include "third_party/blink/renderer/platform/wtf/std_lib_extras.h"
 #include "third_party/blink/renderer/platform/wtf/vector.h"
 
@@ -703,6 +706,9 @@ static bool IsProhibitedParagraphChild(const AtomicString& name) {
           html_names::kPTag.LocalName(),
           html_names::kPlaintextTag.LocalName(),
           html_names::kPreTag.LocalName(),
+          // TODO(Kaleidea,feature HTMLSearchElement): Keep in sync with html_form_element.h::IsHTMLFormTag().
+          // When the HTMLSearchElement feature is shipped add kSearchTag.
+          //html_names::kSearchTag.LocalName(),
           html_names::kSectionTag.LocalName(),
           html_names::kSummaryTag.LocalName(),
           html_names::kTableTag.LocalName(),
@@ -715,7 +721,10 @@ static bool IsProhibitedParagraphChild(const AtomicString& name) {
           html_names::kUlTag.LocalName(),
           html_names::kXmpTag.LocalName(),
       }));
-  return elements.Contains(name);
+  return elements.Contains(name)
+    || (name == html_names::kSearchTag.LocalName() && RuntimeEnabledFeatures::HTMLSearchElementEnabled());
+    // TODO(Kaleidea,feature HTMLSearchElement): Keep in sync with html_form_element.h::IsHTMLFormTag().
+    // When the HTMLSearchElement feature is shipped remove the flag and add kSearchTag to the static set.
 }
 
 void ReplaceSelectionCommand::
