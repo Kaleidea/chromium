@@ -45,6 +45,7 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
 
  public:
   explicit HTMLFormElement(const QualifiedName& tag_name, Document&);
+  explicit HTMLFormElement(Document&);
   ~HTMLFormElement() override;
   void Trace(Visitor*) const override;
 

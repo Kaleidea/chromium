@@ -106,6 +106,10 @@ HTMLFormElement::HTMLFormElement(const QualifiedName& tag_name, Document& docume
   UseCounter::Count(document, WebFeature::kFormElement);
 }
 
+HTMLFormElement::HTMLFormElement(Document& document)
+  : HTMLFormElement(html_names::kFormTag, document) {
+}
+
 HTMLFormElement::~HTMLFormElement() = default;
 
 void HTMLFormElement::Trace(Visitor* visitor) const {
