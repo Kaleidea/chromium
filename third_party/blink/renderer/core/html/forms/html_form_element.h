@@ -189,6 +189,30 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   bool is_in_reset_function_ : 1;
 };
 
+inline bool IsHTMLFormElement(const HTMLElement& element) {
+  return element.HasTagName(html_names::kFormTag) ||
+         element.HasTagName(html_names::kSearchTag);
+}
+
+template <>
+struct DowncastTraits<HTMLFormElement> {
+  static bool AllowFrom(const HTMLElement& element) {
+    return IsHTMLFormElement(element);
+  }
+  static bool AllowFrom(const Node& node) {
+    return node.IsHTMLElement() && IsHTMLFormElement(To<HTMLElement>(node));
+  }
+};
+
+template <>
+inline bool IsElementOfType<const HTMLFormElement>(const Node& node) {
+  return IsA<HTMLFormElement>(node);
+}
+template <>
+inline bool IsElementOfType<const HTMLFormElement>(const HTMLElement& element) {
+  return IsA<HTMLFormElement>(element);
+}
+
 }  // namespace blink
 
 #endif  // THIRD_PARTY_BLINK_RENDERER_CORE_HTML_FORMS_HTML_FORM_ELEMENT_H_
