@@ -66,6 +66,7 @@
 #include "third_party/blink/renderer/core/html/custom/element_internals.h"
 #include "third_party/blink/renderer/core/html/fenced_frame/html_fenced_frame_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_field_set_element.h"
+#include "third_party/blink/renderer/core/html/forms/html_form_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_input_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_label_element.h"
 #include "third_party/blink/renderer/core/html/forms/html_legend_element.h"
@@ -1168,7 +1169,10 @@ ax::mojom::blink::Role AXNodeObject::NativeRoleIgnoringAria() const {
     return ax::mojom::blink::Role::kRubyAnnotation;
   }
 
-  if (IsA<HTMLFormElement>(*GetNode())) {
+  if (GetNode()->HasTagName(html_names::kSearchTag))
+    return ax::mojom::blink::Role::kSearch;
+
+  if (GetNode()->HasTagName(html_names::kFormTag)) {
     // Only treat <form> as role="form" when it has an accessible name, which
     // can only occur when the name is assigned by the author via aria-label,
     // aria-labelledby, or title. Otherwise, treat as a <section>.
