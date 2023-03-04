@@ -416,6 +416,11 @@
       constructorNeedsCreateElementFlags: true,
     },
     {
+      name: "search",
+      interfaceName: "HTMLFormElement",
+      interfaceHeaderDir: "third_party/blink/renderer/core/html/forms",
+    },
+    {
       name: "section",
       interfaceName: "HTMLElement",
     },

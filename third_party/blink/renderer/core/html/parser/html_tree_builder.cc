@@ -759,6 +759,7 @@ void HTMLTreeBuilder::ProcessStartTagForInBody(AtomicHTMLToken* token) {
       frameset_ok_ = false;
       break;
     case HTMLTag::kForm:
+    case HTMLTag::kSearch:
       if (tree_.IsFormElementPointerNonNull() && !IsParsingTemplateContents()) {
         ParseError(token);
         UseCounter::Count(tree_.CurrentNode()->GetDocument(),
@@ -1201,6 +1202,7 @@ void HTMLTreeBuilder::ProcessStartTagForInTable(AtomicHTMLToken* token) {
       break;
     }
     case HTMLTag::kForm:
+    case HTMLTag::kSearch:
       ParseError(token);
       if (tree_.IsFormElementPointerNonNull() && !IsParsingTemplateContents())
         return;
@@ -2002,6 +2004,7 @@ void HTMLTreeBuilder::ProcessEndTagForInBody(AtomicHTMLToken* token) {
       tree_.OpenElements()->PopUntilPopped(tag);
       return;
     case HTMLTag::kForm:
+    case HTMLTag::kSearch:
       if (!IsParsingTemplateContents()) {
         Element* node = tree_.TakeForm();
         if (!node || !tree_.OpenElements()->InScope(node)) {
