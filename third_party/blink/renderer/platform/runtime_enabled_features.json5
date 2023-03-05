@@ -1822,6 +1822,10 @@
       status: "experimental",
     },
     {
+      name: "HTMLSearchElement",
+      status: "experimental",
+    },
+    {
       name: "HTMLSelectMenuElement",
       status: "experimental",
       base_feature: "none",
